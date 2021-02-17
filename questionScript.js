@@ -30,7 +30,7 @@ var questions = [{
 // Declared variables
 var timeDisplay = document.querySelector("#timeDisplay");
 var timer = document.querySelector("#timeStart");
-var questions = document.querySelector("#questions");
+var questionsEl = document.querySelector("#questions");
 var container = document.querySelector("#container");
 var choices = document.querySelector("#choices");
 
@@ -55,6 +55,10 @@ function setTime() {
 
 //Display Question Function
 function displayQuestions() {
-    document.getElementById("questions").innerHTML = JSON.stringify(questions[0].title + "," + questions[0].choices + "," + questions[0].answer);
+    console.log(questions);
+    questionsEl.textContent = questions[0].title + "," + questions[0].choices;
 }
 
+function getQuestions(){
+    
+}
