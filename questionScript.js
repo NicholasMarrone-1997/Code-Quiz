@@ -26,20 +26,20 @@ var questions = [{
     },
 
 ];
-// Declared variables
-var score = 0;
-var questionIndex = 0;
-var secondsLeft = 30;
 
-// Start working code 
 // Declared variables
 var timeDisplay = document.querySelector("#timeDisplay");
 var timer = document.querySelector("#timeStart");
 var questions = document.querySelector("#questions");
 var container = document.querySelector("#container");
+var choices = document.querySelector("#choices");
 
+// Start working code 
 //Start Timer Function
+timeStart.addEventListener("click", setTime);
+
 function setTime() {
+    var secondsLeft = 30;
     var timerInterval = setInterval(function () {
         secondsLeft--;
         timeDisplay.textContent = secondsLeft + " seconds left";
@@ -48,23 +48,13 @@ function setTime() {
             clearInterval(timerInterval);
         }
     }, 1000);
+    //on button click, clear the html 
+    document.getElementById("questions").innerHTML = "";
+    displayQuestions();
 }
-setTime();
 
-
-
-
-//Loop that iterates through questions, displays question title and choices and checks to see if its correct and increments score
-function questionDisplay() {
-    for (var i = 0; i < questions.length; i++) {
-        var response = window.prompt(questions[i].title);
-        var userChoices = window.prompt(questions[i].choices);
-        if (response == questions[i].answer) {
-            score++;
-            alert("Correct!");
-        } else {
-            alert("Incorrect");
-        }
-    }
-    alert("You got: " + score + " out of " + questions.length + " questions.");
+//Display Question Function
+function displayQuestions() {
+    document.getElementById("questions").innerHTML = questions[0].title + "," + questions[0].choices + "," + questions[0].answer;
 }
+
