@@ -55,6 +55,6 @@ function setTime() {
 
 //Display Question Function
 function displayQuestions() {
-    document.getElementById("questions").innerHTML = questions[0].title + "," + questions[0].choices + "," + questions[0].answer;
+    document.getElementById("questions").innerHTML = JSON.stringify(questions[0].title + "," + questions[0].choices + "," + questions[0].answer);
 }
 
