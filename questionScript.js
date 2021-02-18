@@ -36,6 +36,7 @@ var choicesEl = document.querySelector("#choices");
 var quiz = document.querySelector('#quiz');
 var answers = document.querySelector('#answers');
 var secondsLeft = 30;
+var counter = 0;
 
 // Start working code 
 //Start Timer Function
@@ -71,16 +72,18 @@ function buildButton(i) {
     button.addEventListener("click", function () {
         // console.log(res) returns true or false
         if (res === true) {
-            return;
+            questions[0] = questions[0] + [1];
+            displayQuestions();
         } else {
             secondsLeft = secondsLeft - 10;
+            displayQuestions();
         }
     })
     return button;
 }
 
 function displayQuestions() {
-    var counter = 0;
+    //Counter
     if (counter < questions.length) {
         answers.innerHTML = questions[counter].title;
         counter++;
