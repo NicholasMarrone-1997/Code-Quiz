@@ -35,13 +35,14 @@ var container = document.querySelector("#container");
 var choicesEl = document.querySelector("#choices");
 var quiz = document.querySelector('#quiz');
 var answers = document.querySelector('#answers');
+var secondsLeft = 30;
 
 // Start working code 
 //Start Timer Function
 timeStart.addEventListener("click", setTime);
 
 function setTime() {
-    var secondsLeft = 30;
+
     var timerInterval = setInterval(function () {
         secondsLeft--;
         timeDisplay.textContent = secondsLeft + " seconds left";
@@ -50,16 +51,31 @@ function setTime() {
             clearInterval(timerInterval);
         }
     }, 1000);
-    //on button click, clear the html 
-    //document.getElementById("questions").innerHTML = "";
+    //Calling Functions
     displayQuestions();
 }
+
 
 function buildButton(i) {
     const button = document.createElement("button")
     button.innerText = i;
     //add logical statement for button comparison to answer?
     //console.log(i); //returns the choices as buttons 
+    let res;
+    if (questions[0].answer === i) {
+        res = true
+    } else {
+        res = false
+    }
+    button.setAttribute("res", res)
+    button.addEventListener("click", function () {
+        // console.log(res) returns true or false
+        if (res === true) {
+            return;
+        } else {
+            secondsLeft = secondsLeft - 10;
+        }
+    })
     return button;
 }
 
@@ -74,8 +90,3 @@ function displayQuestions() {
         questionsEl.append(buildButton(i))
     ))
 }
-
-//Function that compares the users choice of 4 buttons vs the answer
-
-
-
