@@ -32,7 +32,9 @@ var timeDisplay = document.querySelector("#timeDisplay");
 var timer = document.querySelector("#timeStart");
 var questionsEl = document.querySelector("#questions");
 var container = document.querySelector("#container");
-var choices = document.querySelector("#choices");
+var choicesEl = document.querySelector("#choices");
+var quiz = document.querySelector('#quiz');
+var answers = document.querySelector('#answers');
 
 // Start working code 
 //Start Timer Function
@@ -49,16 +51,31 @@ function setTime() {
         }
     }, 1000);
     //on button click, clear the html 
-    document.getElementById("questions").innerHTML = "";
+    //document.getElementById("questions").innerHTML = "";
     displayQuestions();
 }
 
-//Display Question Function
-function displayQuestions() {
-    console.log(questions);
-    questionsEl.textContent = questions[0].title + "," + questions[0].choices;
+function buildButton(i) {
+    const button = document.createElement("button")
+    button.innerText = i;
+    //add logical statement for button comparison to answer?
+    //console.log(i); //returns the choices as buttons 
+    return button;
 }
 
-function getQuestions(){
-    
+function displayQuestions() {
+    var counter = 0;
+    if (counter < questions.length) {
+        answers.innerHTML = questions[counter].title;
+        counter++;
+    }
+
+    questions[0].choices.map((i) => (
+        questionsEl.append(buildButton(i))
+    ))
 }
+
+//Function that compares the users choice of 4 buttons vs the answer
+
+
+
