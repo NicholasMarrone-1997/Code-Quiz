@@ -1,33 +1,33 @@
-// Var with array and object for questions 
+// Array that holds object for questions
 var questions = [{
-        title: "Commonly used data types DO NOT include:",
-        choices: ["strings", "booleans", "alerts", "numbers"],
-        answer: "alerts"
+        title: "What is the bird with the largest wingspan:",
+        choices: ["Eagle", "Turkey Vulture", "Wandering Albatross", "Waterfowl"],
+        answer: "Wandering Albatross"
     },
     {
-        title: "The condition in an if / else statement is enclosed within ____.",
-        choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
-        answer: "parentheses"
+        title: "Which of the following is not an endangered species:",
+        choices: ["Black Rhino", "Bluefin Tuna", "Indian Elephant", "Cows"],
+        answer: "Cows"
     },
     {
-        title: "Arrays in Javascript can be used to store ____.",
-        choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
-        answer: "all of the above"
+        title: "What is the average lifespan of a Gorilla:",
+        choices: ["10 years", "20 years", "35 years", "50 years"],
+        answer: "35 years"
     },
     {
-        title: "String values must be enclosed within ____ when being assigned to variables.",
-        choices: ["commas", "curly brackets", "quotes", "parenthesis"],
-        answer: "quotes"
+        title: "What is the fastest water animal:",
+        choices: ["Sailfish", "Squid", "Dolphin", "Marlin"],
+        answer: "Sailfish"
     },
     {
-        title: "A very useful tool for used during development and debugging for printing content to the debugger is:",
-        choices: ["Javascript", "terminal / bash", "for loops", "console log"],
-        answer: "console log"
+        title: "What is the fastest land animal:",
+        choices: ["Springbok", "Cheetah", "Greyhound", "Wildebeest"],
+        answer: "Cheetah"
     },
 
 ];
 
-// Declared variables
+// Global Variables
 var timeDisplay = document.querySelector("#timeDisplay");
 var timer = document.querySelector("#timeStart");
 var questionsEl = document.querySelector("#questions");
@@ -38,18 +38,17 @@ var answers = document.querySelector('#answers');
 var secondsLeft = 30;
 var counter = 0;
 
-// Start working code 
-//Start Timer Function
+//Start Timer Function that adds a countdown clock 
 timeStart.addEventListener("click", setTime);
-
 function setTime() {
 
     var timerInterval = setInterval(function () {
         secondsLeft--;
         timeDisplay.textContent = secondsLeft + " seconds left";
 
-        if (secondsLeft === 0) {
+        if (secondsLeft <= 0) {
             clearInterval(timerInterval);
+            gameOver();
         }
     }, 1000);
     //Calling Functions
@@ -58,10 +57,9 @@ function setTime() {
 
 
 function buildButton(i) {
+    //creating buttons for the user choices and determining if their press is true or false
     const button = document.createElement("button")
     button.innerText = i;
-    //add logical statement for button comparison to answer?
-    //console.log(i); //returns the choices as buttons 
     let res;
     if (questions[0].answer === i) {
         res = true
@@ -71,10 +69,10 @@ function buildButton(i) {
     button.setAttribute("res", res)
     button.addEventListener("click", function () {
         // console.log(res) returns true or false
-        if (res === true) {
+        if (res === true) { //if true then increment questions, title, and build button for next set of choices
             questions[0] = questions[0] + [1];
             displayQuestions();
-        } else {
+        } else {//if false then decrement score by 10 and build button for next choices
             secondsLeft = secondsLeft - 10;
             displayQuestions();
         }
@@ -83,13 +81,41 @@ function buildButton(i) {
 }
 
 function displayQuestions() {
-    //Counter
+    //Makes sure that questions are cleared before new ones are shown
+    choicesEl.innerHTML = "";
+    //Map function that iterates through questions and builds buttons for the choices
     if (counter < questions.length) {
+        questions[counter].choices.map((i) => (
+            choicesEl.append(buildButton(i))
+        ))
+
         answers.innerHTML = questions[counter].title;
         counter++;
+    } else {
+        gameOver();
     }
-
-    questions[0].choices.map((i) => (
-        questionsEl.append(buildButton(i))
-    ))
 }
+
+function gameOver(){
+    //clearing choices when game over called
+    choicesEl.innerHTML = "";
+    clearInterval(timeDisplay);
+    // If statement doesn't let the time(score) go past zero
+    if(secondsLeft < 0){
+        secondsLeft = 0;
+    }
+    //Writing score to page
+    choicesEl.innerHTML = "score: " + secondsLeft;
+
+    //Creating a play again button that resets page on click
+    var playReset = document.createElement("button");
+    playReset.innerHTML = "Play Again?";
+    playReset.setAttribute("id", "playreset");
+    choicesEl.appendChild(playReset);
+}
+//Click event listener for pressing the play again button
+choicesEl.addEventListener("click", function(event){
+    if(event.target.contains("playreset")){
+        location.reload();
+    }
+})
