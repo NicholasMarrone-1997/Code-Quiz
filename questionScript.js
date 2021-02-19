@@ -62,7 +62,7 @@ function buildButton(i) {
     button.innerText = i;
     let res;
     var index = 0;
-    if (questions[index].answer === i) {
+    if (questions[counter].answer === i) {
         res = true
     } else {
         res = false
