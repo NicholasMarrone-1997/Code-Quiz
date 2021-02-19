@@ -61,19 +61,21 @@ function buildButton(i) {
     const button = document.createElement("button")
     button.innerText = i;
     let res;
-    if (questions[0].answer === i) {
+    var index = 0;
+    if (questions[index].answer === i) {
         res = true
     } else {
         res = false
     }
     button.setAttribute("res", res)
     button.addEventListener("click", function () {
-        // console.log(res) returns true or false
+        console.log(res) //returns true or false
         if (res === true) { //if true then increment questions, title, and build button for next set of choices
-            questions[0] = questions[0] + [1];
+            questions[index] += 1;
             displayQuestions();
         } else {//if false then decrement score by 10 and build button for next choices
             secondsLeft = secondsLeft - 10;
+            questions[index] += 1;
             displayQuestions();
         }
     })
@@ -115,7 +117,7 @@ function gameOver(){
 }
 //Click event listener for pressing the play again button
 choicesEl.addEventListener("click", function(event){
-    if(event.target.contains("playreset")){
+    if(event.target.any("playreset")){
         location.reload();
     }
 })
